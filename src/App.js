@@ -1,5 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import './App.css';
+import {Button, Card} from 'react-bootstrap'
+
 
 function App() {
 
@@ -20,39 +22,49 @@ useEffect(()=>{
 },[])
 
 
+function refreshPage(){
+  window.location.reload();
+} 
+
   return (
-    <div className="App">
-      <header className="App-header">
-       <div>
-       {user.map(data => (
-        <div className="col-md-4 animated fadeIn" key={data.id.value}>
-              <div className="card">
-                <div className="card-body">
-                  <div className="avatar">
-                    <img
-                      src={data.picture.large}
-                      className="card-img-top"
-                      alt=""
-                    />
-                  </div>
-                  <h5 className="card-title">
-                    {data.name.first +
-                      " " +
-                      data.name.last}
-                  </h5>
-                  <p className="card-text">
-                    {data.location.city +
-                      ", " +
-                      data.location.state}
-                    <br />
-                    <span className="phone">{data.phone}</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-        ))}
+    <div >
+    
+       <div className='pt-4'>
+       <div className='text-center'>
+        <h2 className='ProjectTitle'>Random User API Project</h2>
        </div>
-      </header>
+   
+       
+        {user.map(data => (
+          
+          <div className='center-card'>
+          
+            <div className=''>
+            <div className="" key={data.id.value}>
+            <Card>
+            <Card.Img variant="top" src={data.picture.large} />
+
+            <Card.Body>
+              <Card.Title>{data.name.first +" " +data.name.last}</Card.Title>
+
+              <Card.Text>
+              <p>{data.location.city +", " +data.location.state}</p>
+              <p><i class="fa fa-phone"></i> {data.phone}</p>
+              <h6><i class="fa-solid fa-envelope"></i> {data.email}</h6>
+              </Card.Text>
+
+              {/*<Button variant="primary">New User</Button>*/}
+            </Card.Body>
+          </Card>
+        </div>
+            </div>
+          </div>
+        ))}
+          <div className='text-center'>
+            <Button variant="dark" onClick={refreshPage}>New User</Button> 
+          </div>
+          
+       </div>
     </div>
   );
 }
