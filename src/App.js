@@ -2,24 +2,26 @@ import React,{useEffect, useState} from 'react'
 import './App.css';
 import {Button, Card} from 'react-bootstrap'
 
-
 function App() {
 
   const [user,setUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData =()=>{
+    setIsLoading(true);
     fetch('https://randomuser.me/api/?results=1')
     .then((response) =>{
         return response.json();
     }).then((data)=>{
-        let gagan = data.results
-        console.log(gagan);
-        setUser(gagan)
+        let userdata = data.results
+        setUser(userdata)
+        setIsLoading(false)
     })
-}
-useEffect(()=>{
-    fetchData();
-},[])
+  }
+
+  useEffect(()=>{
+      fetchData();
+  },[])
 
 
 function refreshPage(){
@@ -27,8 +29,17 @@ function refreshPage(){
 } 
 
   return (
-    <div >
     
+    <div>
+      {isLoading ? 
+      <div className='text-center mt-5'>
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+      </div>
+
+       : 
+      
        <div className='pt-4'>
        <div className='text-center'>
         <h2 className='ProjectTitle'>Random User API Project</h2>
@@ -46,11 +57,12 @@ function refreshPage(){
 
             <Card.Body>
               <Card.Title>{data.name.first +" " +data.name.last}</Card.Title>
+              <p>{data.location.city +", " +data.location.state}</p>
+              <p><i className="fa fa-phone"></i> {data.phone}</p>
+              <h6><i className="fa-solid fa-envelope"></i> {data.email}</h6>
 
               <Card.Text>
-              <p>{data.location.city +", " +data.location.state}</p>
-              <p><i class="fa fa-phone"></i> {data.phone}</p>
-              <h6><i class="fa-solid fa-envelope"></i> {data.email}</h6>
+             
               </Card.Text>
 
               {/*<Button variant="primary">New User</Button>*/}
@@ -61,10 +73,11 @@ function refreshPage(){
           </div>
         ))}
           <div className='text-center'>
-            <Button variant="dark" onClick={refreshPage}>New User</Button> 
+            <Button className='btn btn-lg' variant="dark" onClick={refreshPage} disabled={isLoading}>New User</Button> 
           </div>
           
        </div>
+        }
     </div>
   );
 }
