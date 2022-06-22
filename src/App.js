@@ -24,10 +24,6 @@ function App() {
   },[])
 
 
-  function refreshPage(){
-    window.location.reload();
-  } 
-
   return (
     
     <div>
@@ -72,7 +68,7 @@ function App() {
           </div>
         ))}
           <div className='text-center'>
-            <Button className='btn btn-lg' variant="dark" onClick={refreshPage} disabled={isLoading}>New User</Button> 
+            <Button className='btn btn-lg' variant="dark" onClick={fetchData} disabled={isLoading}>New User</Button> 
           </div>
           
        </div>
